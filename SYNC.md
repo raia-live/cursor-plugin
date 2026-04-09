@@ -7,7 +7,7 @@ This repository ships **Cursor IDE plugin** assets (rules, skill, MCP wiring) fo
 | Shipped file | Upstream (AMFS repo) |
 |--------------|----------------------|
 | `rules/amfs-memory.mdc` | `raia-live/amfs` → `.cursor/rules/amfs-memory.mdc` |
-| MCP behavior / env vars | `raia-live/amfs` → `packages/mcp-server` and [MCP guide](https://raia-live.github.io/amfs/guides/mcp/) |
+| MCP behavior | `raia-live/amfs` → `packages/mcp-server` and [MCP guide](https://raia-live.github.io/amfs/guides/mcp/) |
 
 ## When you change upstream
 

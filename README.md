@@ -1,6 +1,6 @@
 # AMFS — Cursor plugin
 
-Official Cursor plugin for **[AMFS](https://raia-live.github.io/amfs/)** (Agent Memory File System): shared, versioned memory for coding agents with MCP tools for briefing, search, writes, outcomes, and decision traces.
+Official Cursor plugin for **[AMFS](https://raia-live.github.io/amfs/)** (Agent Memory File System): shared, versioned memory for coding agents with MCP tools for briefing, search, writes, outcomes, and decision traces. **AMFS Pro (SaaS)** hosts your memory—no Postgres DSN, transport, or other self-hosted MCP environment variables to configure.
 
 **Repository:** [github.com/raia-live/cursor-plugin](https://github.com/raia-live/cursor-plugin)  
 **Submit / install via Cursor:** [Cursor Marketplace](https://cursor.com/marketplace) (after listing) · [Publish a plugin](https://cursor.com/marketplace/publish)
@@ -48,25 +48,13 @@ cd /path/to/your/repo
 amfs init
 ```
 
-This creates `amfs.yaml` and `.amfs/` (add `.amfs/` to `.gitignore` if you use local filesystem storage and do not want data committed). For team backends (Postgres, etc.), see the [AMFS MCP guide](https://raia-live.github.io/amfs/guides/mcp/).
+This creates `amfs.yaml` and `.amfs/` (add `.amfs/` to `.gitignore` if you use local filesystem storage and do not want data committed). **AMFS Pro** customers use the hosted service; follow your team’s onboarding in the AMFS dashboard rather than wiring databases yourself.
 
 ## Cursor
 
 1. Install this plugin from the marketplace (or test locally; see below).
 2. **Settings → Features → Model Context Protocol** — ensure the **amfs** server is enabled.
 3. Use the bundled rules (e.g. **Always** or **Agent Decides**) under **Settings → Rules**.
-
-## Optional environment variables
-
-Same as the AMFS MCP server (see [server CLI](https://github.com/raia-live/amfs/blob/main/packages/mcp-server/src/amfs_mcp/server.py) and docs), for example:
-
-| Variable | Purpose |
-|----------|---------|
-| `AMFS_POSTGRES_DSN` | Postgres backend for shared team memory |
-| `AMFS_AGENT_ID` | Override auto-detected agent id |
-| `AMFS_TRANSPORT` | e.g. `http` for remote MCP (advanced) |
-
-Set them in the MCP server `env` block if you customize the server entry in Cursor.
 
 ## Local testing (before publish)
 

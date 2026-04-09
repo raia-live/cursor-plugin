@@ -7,7 +7,7 @@ description: Use AMFS (Agent Memory File System) for persistent, shared agent me
 
 ## Before you start
 
-1. **Project memory store**: In the repository where you want memory to live, install the CLI and initialize AMFS (creates `amfs.yaml` and `.amfs/`):
+1. **Project / tenant**: **AMFS Pro (SaaS)** — use your organization’s hosted setup from the AMFS dashboard; no self-hosted Postgres or MCP `env` configuration. For local OSS-style storage only, install the CLI and run `amfs init` in the repo (creates `amfs.yaml` and `.amfs/`).
 
    ```bash
    pip install amfs-cli

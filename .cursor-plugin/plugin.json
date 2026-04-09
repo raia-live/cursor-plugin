@@ -1,7 +1,7 @@
 {
   "name": "amfs",
   "displayName": "AMFS Memory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Persistent shared memory for AI agents via AMFS — MCP tools for briefing, search, writes, outcomes, and decision traces across sessions.",
   "author": {
     "name": "Raia",
