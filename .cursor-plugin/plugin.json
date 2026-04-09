@@ -1,8 +1,8 @@
 {
   "name": "amfs",
   "displayName": "AMFS Memory",
-  "version": "1.1.2",
-  "description": "Hosted agent memory in Cursor via Streamable HTTP to amfs-login.sense-lab.ai — briefing, search, writes, outcomes, and decision traces. Set AMFS_API_KEY.",
+  "version": "1.2.0",
+  "description": "AMFS on Sense Lab in Cursor: uvx amfs-mcp-server, AMFS_HTTP_URL (dashboard Server URL), AMFS_API_KEY. Same MCP config as the Agents page.",
   "author": {
     "name": "Raia",
     "email": "opensource@raia.live"

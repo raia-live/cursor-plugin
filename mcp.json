@@ -1,9 +1,11 @@
 {
   "mcpServers": {
     "amfs": {
-      "url": "https://amfs-login.sense-lab.ai/mcp",
-      "headers": {
-        "Authorization": "Bearer ${env:AMFS_API_KEY}"
+      "command": "uvx",
+      "args": ["amfs-mcp-server"],
+      "env": {
+        "AMFS_HTTP_URL": "https://amfs-login.sense-lab.ai",
+        "AMFS_API_KEY": "${env:AMFS_API_KEY}"
       }
     }
   }
