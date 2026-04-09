@@ -1,26 +1,19 @@
 ---
 name: amfs-workflow
-description: Use AMFS (Agent Memory File System) for persistent, shared agent memory. Use when onboarding a project to AMFS, deciding entity paths, or following briefing → search → write → outcome workflows with MCP.
+description: Use AMFS Pro (SaaS) from Cursor — hosted MCP, API key, briefing and memory workflows. Use when connecting to AMFS Pro, choosing entity paths, or following briefing → search → write → outcome flows.
 ---
 
-# AMFS workflow
+# AMFS Pro workflow (Cursor)
 
-## Before you start
+## Connection
 
-1. **Project / tenant**: **AMFS Pro (SaaS)** — use your organization’s hosted setup from the AMFS dashboard; no self-hosted Postgres or MCP `env` configuration. For local OSS-style storage only, install the CLI and run `amfs init` in the repo (creates `amfs.yaml` and `.amfs/`).
-
-   ```bash
-   pip install amfs-cli
-   amfs init
-   ```
-
-   Use `uv` if you prefer: `uv tool install amfs-cli` then `amfs init`.
-
-2. **Cursor MCP**: This plugin ships an `amfs` MCP server (via `uvx amfs-mcp-server`). Ensure the server is enabled under **Settings → Features → Model Context Protocol**.
+1. **AMFS Pro dashboard** ([raia.live](https://raia.live)) — API key and (if needed) the exact **MCP URL** for your tenant.
+2. **Environment** — Set `AMFS_API_KEY` so Cursor can resolve `${env:AMFS_API_KEY}` in the plugin’s `mcp.json`.
+3. **MCP** — Enable the **amfs** server under **Settings → Features → Model Context Protocol**. Default endpoint: `https://api.raia.live/mcp` unless your dashboard specifies otherwise.
 
 ## Entity paths
 
-Use hierarchical paths: `{repo}/{service-or-module}` (e.g. `myapp/auth`, `amfs/core-engine`).
+Use hierarchical paths: `{repo}/{service-or-module}` (e.g. `myapp/auth`, `acme/api`).
 
 ## Session flow
 
@@ -31,11 +24,7 @@ Use hierarchical paths: `{repo}/{service-or-module}` (e.g. `myapp/auth`, `amfs/c
 5. **`amfs_commit_outcome`** — after deploys or incidents to update confidence.
 6. **`amfs_explain`** / **`amfs_history`** — inspect traces and how an entry evolved.
 
-## MCP tools (reference)
-
-`amfs_read`, `amfs_write`, `amfs_search`, `amfs_list`, `amfs_stats`, `amfs_commit_outcome`, `amfs_history`, `amfs_record_context`, `amfs_recall`, `amfs_my_entries`, `amfs_read_from`, `amfs_cross_agent_reads`, `amfs_explain`, `amfs_briefing`, `amfs_timeline`
-
 ## Docs
 
-- [AMFS MCP setup](https://raia-live.github.io/amfs/guides/mcp/)
-- [AMFS documentation](https://raia-live.github.io/amfs/)
+- [AMFS Pro vs OSS](https://raia-live.github.io/amfs/editions/)
+- [MCP setup (incl. Pro + Cursor)](https://raia-live.github.io/amfs/guides/mcp/)

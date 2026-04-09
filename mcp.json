@@ -1,9 +1,10 @@
 {
   "mcpServers": {
     "amfs": {
-      "command": "uvx",
-      "args": ["amfs-mcp-server"],
-      "env": {}
+      "url": "https://api.raia.live/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:AMFS_API_KEY}"
+      }
     }
   }
 }

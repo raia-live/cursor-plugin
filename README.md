@@ -1,73 +1,46 @@
-# AMFS — Cursor plugin
+# AMFS — Cursor plugin (Pro / SaaS)
 
-Official Cursor plugin for **[AMFS](https://raia-live.github.io/amfs/)** (Agent Memory File System): shared, versioned memory for coding agents with MCP tools for briefing, search, writes, outcomes, and decision traces. **AMFS Pro (SaaS)** hosts your memory—no Postgres DSN, transport, or other self-hosted MCP environment variables to configure.
+Official Cursor plugin for **[AMFS Pro](https://raia-live.github.io/amfs/editions/)** — hosted agent memory with MCP over **Streamable HTTP** to Raia’s API. No local MCP process, Python runtime, or self-hosted database configuration.
 
-**Repository:** [github.com/raia-live/cursor-plugin](https://github.com/raia-live/cursor-plugin)  
-**Submit / install via Cursor:** [Cursor Marketplace](https://cursor.com/marketplace) (after listing) · [Publish a plugin](https://cursor.com/marketplace/publish)
+**Get access:** [raia.live](https://raia.live) · **Docs:** [raia-live.github.io/amfs](https://raia-live.github.io/amfs/)  
+**Repository:** [github.com/raia-live/cursor-plugin](https://github.com/raia-live/cursor-plugin)
 
 ## What you get
 
 - **Rules** — When to call `amfs_briefing`, `amfs_write`, `amfs_search`, outcomes, and entity naming (`{repo}/{module}`).
-- **Skill** — `amfs-workflow` for setup and session flow (`/amfs-workflow` in chat when applicable).
-- **MCP server** — `amfs` via [`uvx amfs-mcp-server`](https://pypi.org/project/amfs-mcp-server/) (stdio). No absolute paths to a local clone.
+- **Skill** — `amfs-workflow` for session flow (`/amfs-workflow` in chat when applicable).
+- **MCP (hosted)** — Connects Cursor to **AMFS Pro** at `https://api.raia.live/mcp` (see below if your dashboard shows a different endpoint).
 
-### MCP tools (PyPI `amfs-mcp-server`)
+### MCP tools (hosted server)
 
-`amfs_read`, `amfs_write`, `amfs_search`, `amfs_list`, `amfs_stats`, `amfs_commit_outcome`, `amfs_history`, `amfs_record_context`, `amfs_recall`, `amfs_my_entries`, `amfs_read_from`, `amfs_cross_agent_reads`, `amfs_explain`, `amfs_briefing`, `amfs_timeline`
+`amfs_read`, `amfs_write`, `amfs_search`, `amfs_list`, `amfs_stats`, `amfs_commit_outcome`, `amfs_history`, `amfs_record_context`, `amfs_recall`, `amfs_my_entries`, `amfs_read_from`, `amfs_cross_agent_reads`, `amfs_explain`, `amfs_briefing`, `amfs_timeline` — plus additional tools your tenant’s server version may expose (e.g. `amfs_set_identity`, `amfs_retrieve`, graph/timeline helpers). Check **Available Tools** in Cursor after connecting.
 
-## Prerequisites
+## Setup
 
-- **Python 3.11+** on your machine (used by `uvx` to run the MCP server).
-- **[uv](https://docs.astral.sh/uv/)** installed and on your `PATH` (recommended). Cursor will run `uvx amfs-mcp-server` as configured in `mcp.json`.
+1. **AMFS Pro** — Create a project/tenant and issue an **API key** from the AMFS Pro dashboard ([raia.live](https://raia.live)).
+2. **API key in your environment** — Set `AMFS_API_KEY` where Cursor can see it (shell profile, or macOS **launchd** / Windows user env). The plugin uses [Cursor interpolation](https://cursor.com/docs/mcp.md#config-interpolation): `Bearer ${env:AMFS_API_KEY}` in `mcp.json`.
+3. **MCP URL** — Default in this plugin is `https://api.raia.live/mcp`. If your dashboard lists another MCP base URL (region, staging, or custom domain), copy that value into **Cursor → MCP** for the `amfs` server, or edit `mcp.json` in a fork/local copy of the plugin.
+4. **Install the plugin** — Cursor Marketplace (when listed) or local test symlink (below).
+5. **Settings → Features → Model Context Protocol** — Enable the **amfs** server.
+6. **Settings → Rules** — Use the bundled rules (**Always** or **Agent Decides**) as you prefer.
 
-### If you do not use `uv`
+### OAuth (if your tenant uses it)
 
-Install the server into an environment that is on your `PATH`, then override MCP in your project or user config to use:
+Some Pro deployments use OAuth instead of a static API key. Follow the dashboard instructions and [Cursor’s static OAuth MCP config](https://cursor.com/docs/mcp.md#static-oauth-for-remote-servers); you may replace the `headers` block in `mcp.json` with an `auth` object as documented by Raia.
 
-```json
-{
-  "mcpServers": {
-    "amfs": {
-      "command": "amfs-mcp-server",
-      "args": [],
-      "env": {}
-    }
-  }
-}
-```
-
-Install: `pip install amfs-mcp-server`
-
-## Project setup (memory store)
-
-AMFS stores data per **project** (after `amfs init`):
-
-```bash
-pip install amfs-cli
-cd /path/to/your/repo
-amfs init
-```
-
-This creates `amfs.yaml` and `.amfs/` (add `.amfs/` to `.gitignore` if you use local filesystem storage and do not want data committed). **AMFS Pro** customers use the hosted service; follow your team’s onboarding in the AMFS dashboard rather than wiring databases yourself.
-
-## Cursor
-
-1. Install this plugin from the marketplace (or test locally; see below).
-2. **Settings → Features → Model Context Protocol** — ensure the **amfs** server is enabled.
-3. Use the bundled rules (e.g. **Always** or **Agent Decides**) under **Settings → Rules**.
-
-## Local testing (before publish)
+## Local testing (developers)
 
 ```bash
 mkdir -p ~/.cursor/plugins/local
+export AMFS_API_KEY="your-key-from-dashboard"
 ln -sf /absolute/path/to/cursor-plugin ~/.cursor/plugins/local/amfs
 ```
 
-Restart Cursor or **Developer: Reload Window**. Confirm the rule and MCP server load.
+Restart Cursor or **Developer: Reload Window**. Confirm MCP connects (Output → MCP Logs).
 
-## Syncing from AMFS
+## Syncing from AMFS OSS
 
-See [SYNC.md](./SYNC.md). Bump `.cursor-plugin/plugin.json` `version` when you ship material rule or doc changes.
+Rule text may be mirrored from the open-source repo; see [SYNC.md](./SYNC.md). Bump `.cursor-plugin/plugin.json` `version` when you ship material changes.
 
 ## License
 

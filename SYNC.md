@@ -1,21 +1,20 @@
 # Syncing content from AMFS
 
-This repository ships **Cursor IDE plugin** assets (rules, skill, MCP wiring) for [AMFS](https://github.com/raia-live/amfs).
+This repository ships the **AMFS Pro / SaaS** Cursor plugin (rules, skill, **hosted** MCP via `url` + `Authorization` header).
 
 ## Source of truth
 
-| Shipped file | Upstream (AMFS repo) |
-|--------------|----------------------|
-| `rules/amfs-memory.mdc` | `raia-live/amfs` → `.cursor/rules/amfs-memory.mdc` |
-| MCP behavior | `raia-live/amfs` → `packages/mcp-server` and [MCP guide](https://raia-live.github.io/amfs/guides/mcp/) |
+| Shipped file | Notes |
+|--------------|--------|
+| `rules/amfs-memory.mdc` | Often mirrored from `raia-live/amfs` → `.cursor/rules/amfs-memory.mdc` (OSS agent guidance). |
+| `mcp.json` | **Pro:** `url` points at Raia’s hosted MCP (`https://api.raia.live/mcp` by default). Update if product uses a different production base URL. |
 
-## When you change upstream
+## When you change upstream or product URLs
 
-1. Copy or merge the updated rule from AMFS into `rules/amfs-memory.mdc` (preserve valid YAML frontmatter: `description`, `alwaysApply` or `globs`).
-2. If tool names or workflows change, update `skills/amfs-workflow/SKILL.md` and `README.md`.
-3. Bump `version` in `.cursor-plugin/plugin.json` following semver.
-4. Tag or release this repo if you use GitHub releases for marketplace updates.
+1. Merge rule updates from AMFS OSS if desired (preserve valid YAML frontmatter).
+2. If the production MCP base URL changes, update `mcp.json` and **README.md** in lockstep.
+3. Bump `version` in `.cursor-plugin/plugin.json` (semver).
 
-## Plugin version vs `amfs-mcp-server`
+## OSS vs this plugin
 
-The MCP server is published separately on PyPI as **`amfs-mcp-server`**. This plugin invokes it via `uvx amfs-mcp-server`. You do not need to bump the plugin version for every PyPI release unless README or user-facing instructions change.
+Self-hosted / local MCP (`uvx amfs-mcp-server`, Postgres, etc.) is documented in the [AMFS OSS MCP guide](https://raia-live.github.io/amfs/guides/mcp/). This plugin targets **AMFS Pro** customers only.

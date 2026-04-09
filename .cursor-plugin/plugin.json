@@ -1,8 +1,8 @@
 {
   "name": "amfs",
   "displayName": "AMFS Memory",
-  "version": "1.0.1",
-  "description": "Persistent shared memory for AI agents via AMFS — MCP tools for briefing, search, writes, outcomes, and decision traces across sessions.",
+  "version": "1.1.0",
+  "description": "AMFS Pro (SaaS): hosted agent memory in Cursor via Streamable HTTP — briefing, search, writes, outcomes, and decision traces. Connects to Raia’s API; set AMFS_API_KEY.",
   "author": {
     "name": "Raia",
     "email": "opensource@raia.live"
@@ -15,9 +15,11 @@
     "cursor",
     "amfs",
     "knowledge",
-    "multi-agent"
+    "multi-agent",
+    "saas",
+    "pro"
   ],
   "logo": "assets/logo.svg",
   "repository": "https://github.com/raia-live/cursor-plugin",
-  "homepage": "https://raia-live.github.io/amfs/"
+  "homepage": "https://raia.live/"
 }
