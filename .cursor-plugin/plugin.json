@@ -1,8 +1,8 @@
 {
   "name": "amfs",
   "displayName": "AMFS Memory",
-  "version": "1.1.0",
-  "description": "AMFS Pro (SaaS): hosted agent memory in Cursor via Streamable HTTP — briefing, search, writes, outcomes, and decision traces. Connects to Raia’s API; set AMFS_API_KEY.",
+  "version": "1.1.1",
+  "description": "Hosted agent memory in Cursor via Streamable HTTP — briefing, search, writes, outcomes, and decision traces. Set AMFS_API_KEY; connects to the Sense Lab API.",
   "author": {
     "name": "Raia",
     "email": "opensource@raia.live"
@@ -15,11 +15,9 @@
     "cursor",
     "amfs",
     "knowledge",
-    "multi-agent",
-    "saas",
-    "pro"
+    "multi-agent"
   ],
   "logo": "assets/logo.svg",
   "repository": "https://github.com/raia-live/cursor-plugin",
-  "homepage": "https://raia.live/"
+  "homepage": "https://www.sense-lab.ai"
 }

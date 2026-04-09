@@ -1,13 +1,13 @@
 # Syncing content from AMFS
 
-This repository ships the **AMFS Pro / SaaS** Cursor plugin (rules, skill, **hosted** MCP via `url` + `Authorization` header).
+This repository ships the **AMFS** Cursor plugin for Sense Lab’s hosted service (rules, skill, **hosted** MCP via `url` + `Authorization` header).
 
 ## Source of truth
 
 | Shipped file | Notes |
 |--------------|--------|
 | `rules/amfs-memory.mdc` | Often mirrored from `raia-live/amfs` → `.cursor/rules/amfs-memory.mdc` (OSS agent guidance). |
-| `mcp.json` | **Pro:** `url` points at Raia’s hosted MCP (`https://api.raia.live/mcp` by default). Update if product uses a different production base URL. |
+| `mcp.json` | Hosted MCP: `url` defaults to `https://api.raia.live/mcp`. Update if product uses a different production base URL. |
 
 ## When you change upstream or product URLs
 
@@ -17,4 +17,4 @@ This repository ships the **AMFS Pro / SaaS** Cursor plugin (rules, skill, **hos
 
 ## OSS vs this plugin
 
-Self-hosted / local MCP (`uvx amfs-mcp-server`, Postgres, etc.) is documented in the [AMFS OSS MCP guide](https://raia-live.github.io/amfs/guides/mcp/). This plugin targets **AMFS Pro** customers only.
+Self-hosted / local MCP (`uvx amfs-mcp-server`, Postgres, etc.) is documented in the [AMFS OSS MCP guide](https://raia-live.github.io/amfs/guides/mcp/). This plugin targets **hosted** AMFS (Sense Lab).

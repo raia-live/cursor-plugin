@@ -1,13 +1,13 @@
 ---
 name: amfs-workflow
-description: Use AMFS Pro (SaaS) from Cursor — hosted MCP, API key, briefing and memory workflows. Use when connecting to AMFS Pro, choosing entity paths, or following briefing → search → write → outcome flows.
+description: Use AMFS from Cursor with hosted MCP — API key, briefing and memory workflows. Use when connecting AMFS in Cursor, choosing entity paths, or following briefing → search → write → outcome flows.
 ---
 
-# AMFS Pro workflow (Cursor)
+# AMFS workflow (Cursor)
 
 ## Connection
 
-1. **AMFS Pro dashboard** ([raia.live](https://raia.live)) — API key and (if needed) the exact **MCP URL** for your tenant.
+1. **Dashboard** ([sense-lab.ai](https://www.sense-lab.ai)) — API key and (if needed) the exact **MCP URL** for your tenant.
 2. **Environment** — Set `AMFS_API_KEY` so Cursor can resolve `${env:AMFS_API_KEY}` in the plugin’s `mcp.json`.
 3. **MCP** — Enable the **amfs** server under **Settings → Features → Model Context Protocol**. Default endpoint: `https://api.raia.live/mcp` unless your dashboard specifies otherwise.
 
@@ -26,5 +26,5 @@ Use hierarchical paths: `{repo}/{service-or-module}` (e.g. `myapp/auth`, `acme/a
 
 ## Docs
 
-- [AMFS Pro vs OSS](https://raia-live.github.io/amfs/editions/)
-- [MCP setup (incl. Pro + Cursor)](https://raia-live.github.io/amfs/guides/mcp/)
+- [AMFS documentation](https://raia-live.github.io/amfs/)
+- [MCP setup (incl. hosted Cursor)](https://raia-live.github.io/amfs/guides/mcp/)
