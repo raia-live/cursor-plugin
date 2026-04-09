@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "amfs": {
-      "url": "https://api.raia.live/mcp",
+      "url": "https://amfs-login.sense-lab.ai/mcp",
       "headers": {
         "Authorization": "Bearer ${env:AMFS_API_KEY}"
       }

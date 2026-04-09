@@ -9,7 +9,7 @@ Official Cursor plugin for **[AMFS](https://raia-live.github.io/amfs/)** — hos
 
 - **Rules** — When to call `amfs_briefing`, `amfs_write`, `amfs_search`, outcomes, and entity naming (`{repo}/{module}`).
 - **Skill** — `amfs-workflow` for session flow (`/amfs-workflow` in chat when applicable).
-- **MCP (hosted)** — Connects Cursor at `https://api.raia.live/mcp` by default (see below if your dashboard shows a different endpoint).
+- **MCP (hosted)** — Connects Cursor at `https://amfs-login.sense-lab.ai/mcp` (Streamable HTTP; path matches AMFS `AMFS_PATH`, default `/mcp`). Use the **MCP URL** from your dashboard if it differs.
 
 ### MCP tools (hosted server)
 
@@ -19,7 +19,7 @@ Official Cursor plugin for **[AMFS](https://raia-live.github.io/amfs/)** — hos
 
 1. **Account** — Create a project/tenant and issue an **API key** from your Sense Lab / AMFS dashboard ([sense-lab.ai](https://www.sense-lab.ai)).
 2. **API key in your environment** — Set `AMFS_API_KEY` where Cursor can see it (shell profile, or macOS **launchd** / Windows user env). The plugin uses [Cursor interpolation](https://cursor.com/docs/mcp.md#config-interpolation): `Bearer ${env:AMFS_API_KEY}` in `mcp.json`.
-3. **MCP URL** — Default in this plugin is `https://api.raia.live/mcp`. If your dashboard lists another MCP base URL (region, staging, or custom domain), copy that value into **Cursor → MCP** for the `amfs` server, or edit `mcp.json` in a fork/local copy of the plugin.
+3. **MCP URL** — Default in this plugin is `https://amfs-login.sense-lab.ai/mcp`. If the **MCP Connection Card** in your dashboard shows a different URL, use that in **Cursor → MCP** or in a fork/local `mcp.json`.
 4. **Install the plugin** — Cursor Marketplace (when listed) or local test symlink (below).
 5. **Settings → Features → Model Context Protocol** — Enable the **amfs** server.
 6. **Settings → Rules** — Use the bundled rules (**Always** or **Agent Decides**) as you prefer.

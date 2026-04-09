@@ -9,7 +9,7 @@ description: Use AMFS from Cursor with hosted MCP — API key, briefing and memo
 
 1. **Dashboard** ([sense-lab.ai](https://www.sense-lab.ai)) — API key and (if needed) the exact **MCP URL** for your tenant.
 2. **Environment** — Set `AMFS_API_KEY` so Cursor can resolve `${env:AMFS_API_KEY}` in the plugin’s `mcp.json`.
-3. **MCP** — Enable the **amfs** server under **Settings → Features → Model Context Protocol**. Default endpoint: `https://api.raia.live/mcp` unless your dashboard specifies otherwise.
+3. **MCP** — Enable the **amfs** server under **Settings → Features → Model Context Protocol**. Default endpoint: `https://amfs-login.sense-lab.ai/mcp` unless your dashboard specifies otherwise.
 
 ## Entity paths
 

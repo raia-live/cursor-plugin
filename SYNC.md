@@ -7,7 +7,7 @@ This repository ships the **AMFS** Cursor plugin for Sense Lab’s hosted servic
 | Shipped file | Notes |
 |--------------|--------|
 | `rules/amfs-memory.mdc` | Often mirrored from `raia-live/amfs` → `.cursor/rules/amfs-memory.mdc` (OSS agent guidance). |
-| `mcp.json` | Hosted MCP: `url` defaults to `https://api.raia.live/mcp`. Update if product uses a different production base URL. |
+| `mcp.json` | Hosted MCP: `url` defaults to `https://amfs-login.sense-lab.ai/mcp`. Update if the dashboard MCP URL changes. |
 
 ## When you change upstream or product URLs
 
