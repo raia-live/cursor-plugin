@@ -1,0 +1,96 @@
+---
+description: Rules for using AMFS (Agent Memory File System) as a persistent agent brain across coding sessions
+alwaysApply: true
+---
+
+# AMFS Memory — Agent Behavioral Rules
+
+You have access to AMFS (Agent Memory File System) through MCP tools. AMFS gives you a **persistent brain** — memory that survives across sessions, agents, and machines. Use it to build institutional knowledge over time.
+
+## When to GET BRIEFED (start every session with context)
+
+- **Before starting any work**: Get a compiled briefing from the Memory Cortex. This gives you pre-compiled knowledge about the entities you're about to work on — what other agents know, recent risks, external events, and confidence-ranked facts. This is your most important first step.
+  ```
+  amfs_briefing(entity_path="<repo>/<module>")
+  ```
+- Then recall your own specific memories and search for details:
+  ```
+  amfs_recall("<repo>/<module>", "<relevant-key>")
+  amfs_search(entity_path="<repo>/<service-or-module>")
+  ```
+- **Before making architectural decisions**: Get a briefing first, then check specific patterns.
+  ```
+  amfs_briefing(entity_path="<repo>/<module>")
+  amfs_search(query="<topic>", min_confidence=0.5)
+  ```
+- **When encountering errors**: Check if the Cortex or another agent already has context.
+  ```
+  amfs_briefing(entity_path="<repo>/<module>")
+  amfs_search(query="<error-keyword>")
+  ```
+
+## When to READ FROM another agent
+
+- **When consulting another agent's work**: Explicitly read from their brain so the knowledge transfer is tracked.
+  ```
+  amfs_read_from("<agent_id>", "<repo>/<module>", "<key>")
+  ```
+- **When you know which agent has the answer**: Direct cross-agent read is faster and more traceable than search.
+
+## When to WRITE memory (form a memory)
+
+- **After completing a task**: Form a memory of what was done and why.
+  ```
+  amfs_write("<repo>/<module>", "task-summary-<short-desc>", "<what you did and key decisions>")
+  ```
+- **When discovering a pattern**: Write it with pattern_refs for cross-referencing.
+  ```
+  amfs_write("<repo>/<module>", "pattern-<name>", "<pattern description>", pattern_refs=["related-key"])
+  ```
+- **When finding a bug or risk**: Record it so other agents are warned. Use `memory_type="belief"` for hypotheses.
+  ```
+  amfs_write("<repo>/<module>", "risk-<name>", "<what could go wrong>", confidence=0.8, memory_type="belief")
+  ```
+- **When making a non-obvious decision**: Record the reasoning for future agents.
+  ```
+  amfs_write("<repo>/<module>", "decision-<topic>", "<decision and rationale>")
+  ```
+- **When logging actions taken**: Record what you did so future agents can retrace steps. Experiences decay slower.
+  ```
+  amfs_write("<repo>/<module>", "action-<desc>", "<what you did>", memory_type="experience")
+  ```
+- **When consulting external tools or APIs**: Record the context so decision traces are complete.
+  ```
+  amfs_record_context("<label>", "<summary of what was found>", source="<tool name>")
+  ```
+
+## When to COMMIT OUTCOMES
+
+- After a **successful deployment**: `amfs_commit_outcome("deploy-<version>", "success")`
+- After a **bug or minor setback**: `amfs_commit_outcome("<ticket>", "minor_failure")`
+- After a **severe failure**: `amfs_commit_outcome("<incident-id>", "critical_failure")` or `"failure"`
+
+## Entity naming convention
+
+Use hierarchical paths: `{repo}/{service-or-module}`
+
+Examples:
+- `amfs/core-engine` — the core AMFS engine
+- `myapp/checkout-service` — a checkout service
+- `myapp/auth` — authentication module
+
+## Confidence guidelines
+
+- `1.0` — verified fact, tested pattern, confirmed decision
+- `0.7-0.9` — high confidence based on analysis, not yet validated in production
+- `0.4-0.6` — hypothesis, initial observation, needs validation
+- `< 0.4` — speculative, early signal
+
+## Important
+
+- **Always start with `amfs_briefing`** — this gives you compiled, ranked knowledge from the Cortex before you even start looking.
+- Use `amfs_recall` for specific keys you remember, `amfs_search` for broader queries.
+- Use `amfs_read_from` when you know which agent has the knowledge you need.
+- Don't write trivial information (e.g. "added a comment"). Write things that would help a future agent.
+- Keep values concise but informative — think of it as writing a note to a colleague.
+- Confidence decays over time. Entries validated by outcomes decay slower.

@@ -1,0 +1,23 @@
+{
+  "name": "amfs",
+  "displayName": "AMFS Memory",
+  "version": "1.0.0",
+  "description": "Persistent shared memory for AI agents via AMFS — MCP tools for briefing, search, writes, outcomes, and decision traces across sessions.",
+  "author": {
+    "name": "Raia",
+    "email": "opensource@raia.live"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "memory",
+    "mcp",
+    "agents",
+    "cursor",
+    "amfs",
+    "knowledge",
+    "multi-agent"
+  ],
+  "logo": "assets/logo.svg",
+  "repository": "https://github.com/raia-live/cursor-plugin",
+  "homepage": "https://raia-live.github.io/amfs/"
+}

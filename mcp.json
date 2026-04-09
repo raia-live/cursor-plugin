@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "amfs": {
+      "command": "uvx",
+      "args": ["amfs-mcp-server"],
+      "env": {}
+    }
+  }
+}
