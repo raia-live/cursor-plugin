@@ -8,7 +8,7 @@ Official Cursor plugin for **[AMFS](https://raia-live.github.io/amfs/)** on **Se
 ## What you get
 
 - **Rules** — When to call `amfs_briefing`, `amfs_write`, `amfs_search`, outcomes, and entity naming (`{repo}/{module}`).
-- **Skill** — `amfs-workflow` for session flow (`/amfs-workflow` in chat when applicable).
+- **Skill** — `amfs-memory` — full agent memory guide covering cost-conscious patterns, session lifecycle, what to save/skip, anti-patterns, and cross-agent collaboration.
 - **MCP** — Cursor runs `uvx amfs-mcp-server` (stdio). The process uses **`AMFS_HTTP_URL`** (Sense Lab **Server URL**, e.g. `https://amfs-login.sense-lab.ai`) and **`AMFS_API_KEY`** to talk to the hosted API. There is **no `/mcp` on that URL** for this setup — `/mcp` is only for *remote* Streamable HTTP when the MCP server itself listens as an HTTP service.
 
 ### MCP tools
