@@ -1,44 +1,103 @@
-# AMFS — Cursor plugin
+# SenseLab
 
-Official Cursor plugin for **[AMFS](https://raia-live.github.io/amfs/)** on **Sense Lab** — same wiring as the **Agents → MCP Connection** card in the dashboard ([amfs.sense-lab.ai/agents](https://amfs.sense-lab.ai/agents)).
+Cursor plugin that gives agents **persistent memory** — architecture decisions,
+discovered patterns, known risks, and the personal preferences of the person
+they work for — carried across sessions, tools, and machines. Shared **rooms**
+let several people's agents work from the same knowledge.
 
-**Homepage:** [sense-lab.ai](https://www.sense-lab.ai) · **Docs:** [raia-live.github.io/amfs](https://raia-live.github.io/amfs/)  
-**Repository:** [github.com/raia-live/cursor-plugin](https://github.com/raia-live/cursor-plugin)
+Homepage: [sense-lab.ai](https://www.sense-lab.ai)
 
-## What you get
+## Install
 
-- **Rules** — When to call `amfs_briefing`, `amfs_write`, `amfs_search`, outcomes, and entity naming (`{repo}/{module}`).
-- **Skill** — `amfs-memory` — full agent memory guide covering cost-conscious patterns, session lifecycle, what to save/skip, anti-patterns, and cross-agent collaboration.
-- **MCP** — Cursor runs `uvx amfs-mcp-server` (stdio). The process uses **`AMFS_HTTP_URL`** (Sense Lab **Server URL**, e.g. `https://amfs-login.sense-lab.ai`) and **`AMFS_API_KEY`** to talk to the hosted API. There is **no `/mcp` on that URL** for this setup — `/mcp` is only for *remote* Streamable HTTP when the MCP server itself listens as an HTTP service.
+1. Open **Cursor Settings → Plugins**.
+2. Search for **SenseLab** and click **Install**.
+3. Paste your API key when prompted.
 
-### MCP tools
+Or run `/add-plugin senselab` in chat.
 
-`amfs_read`, `amfs_write`, `amfs_search`, `amfs_list`, `amfs_stats`, `amfs_commit_outcome`, `amfs_history`, `amfs_record_context`, `amfs_recall`, `amfs_my_entries`, `amfs_read_from`, `amfs_cross_agent_reads`, `amfs_explain`, `amfs_briefing`, `amfs_timeline` — plus tools your server version may add. Check **Available Tools** in Cursor after connecting.
+### Get an API key
 
-## Setup (matches dashboard)
+Sign in at [sense-lab.ai](https://www.sense-lab.ai), then open the dashboard and
+create a key under **Settings → API Keys**. Cursor stores the key and injects it
+into the MCP server; it is never written into this repository.
 
-1. **API key** — Create one under **Settings → API Keys** on the AMFS dashboard.
-2. **`AMFS_API_KEY` in your environment** — Set it where Cursor resolves [config interpolation](https://cursor.com/docs/mcp.md#config-interpolation) (e.g. shell profile, or macOS **launchd** / Windows user environment). The plugin’s `mcp.json` uses `"AMFS_API_KEY": "${env:AMFS_API_KEY}"` so the key is never committed.
-3. **[uv](https://docs.astral.sh/uv/)** — Must be on your `PATH` so `uvx amfs-mcp-server` can run (Cursor spawns this process).
-4. **Install the plugin** — Marketplace (when listed) or local symlink (below).
-5. **Settings → Features → Model Context Protocol** — Enable the **amfs** server.
-6. **Settings → Rules** — Enable the bundled rules as you prefer.
+### Requirements
 
-If your dashboard shows a different **Server URL**, change `AMFS_HTTP_URL` in `mcp.json` (or override in Cursor MCP settings). You can pin a version with `"args": ["amfs-mcp-server@x.y.z"]` if you want.
-
-## Local testing (developers)
+The MCP server runs locally through [uv](https://docs.astral.sh/uv/), so `uvx`
+must be on your `PATH`:
 
 ```bash
-mkdir -p ~/.cursor/plugins/local
-export AMFS_API_KEY="your-key-from-settings-api-keys"
-ln -sf /absolute/path/to/cursor-plugin ~/.cursor/plugins/local/amfs
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Restart Cursor or **Developer: Reload Window**. Check **Output → MCP Logs** if tools do not appear.
+## MCP
 
-## Syncing from AMFS OSS
+```json
+{
+  "mcpServers": {
+    "senselab": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--refresh", "amfs-mcp-server-pro@latest"],
+      "env": {
+        "AMFS_HTTP_URL": "https://amfs-login.sense-lab.ai",
+        "AMFS_API_KEY": "${AMFS_API_KEY}"
+      }
+    }
+  }
+}
+```
 
-See [SYNC.md](./SYNC.md). Bump `.cursor-plugin/plugin.json` `version` when you ship material changes.
+`--refresh` with `@latest` means each Cursor launch picks up the current server
+release. Pin a version instead if you would rather control upgrades:
+`"args": ["amfs-mcp-server-pro==0.1.51"]`.
+
+## What agents can do
+
+| Category | Capabilities |
+| --- | --- |
+| Recall | Semantic search across everything visible, compiled entity briefings, exact-key reads, timelines, and tracked cross-agent reads |
+| Save | Decisions with rationale, patterns, risks, task summaries, personal facts and preferences, with confidence and decay by memory type |
+| Traces | Record actions and external context, commit outcomes, then replay or verify the memory state behind any past decision |
+| Rooms | Shared briefings, threaded discussions, and activity feeds across members |
+| Room access | Browse discoverable rooms, request to join, and approve, decline, or grant access as the owner |
+| Documents | Add PDF, DOCX, Markdown, and text files to a room, then search and quote them with page citations |
+| Negotiations | Structured propose, counter, and accept flows between agents in a room |
+| Knowledge graph | Neighbours, paths, and queries over linked entities; agent capability discovery |
+| Consolidation | Review, critique, distil, and validate accumulated memory; calibrate confidence |
+
+The running server is the source of truth for tool names and schemas — open
+**Available Tools** in Cursor after connecting to see the current set.
+
+## What ships in the plugin
+
+- **Rule** (`rules/senselab-memory.mdc`) — always applied. Tells agents to
+  recall before working, what is worth saving, how rooms and documents behave,
+  and to ask before accepting a negotiation proposal.
+- **Skill** (`skills/senselab-memory/SKILL.md`) — the fuller guide: session
+  lifecycle, cost model, conventions for entity paths and keys, memory types
+  and confidence, and anti-patterns.
+
+## Troubleshooting
+
+**No SenseLab tools appear.** Check **Output → MCP Logs**. The usual cause is
+`uvx` not being found: Cursor launched from the Dock does not inherit your
+shell `PATH`. Confirm with `command -v uvx`, and if it resolves only in your
+shell, either relaunch Cursor from a terminal or point `command` at the
+absolute path.
+
+**Authentication errors.** Regenerate the key under **Settings → API Keys** and
+re-enter it in the plugin's settings. Keys are scoped to one account.
+
+**Tools respond but nothing is remembered.** Agents must call the identity tool
+before writing, and commit an outcome at the end. Both are covered by the
+bundled rule — make sure it is enabled under **Settings → Rules**.
+
+## Self-hosting
+
+A self-hosted server backed by your own Postgres or filesystem is available
+separately and is not what this plugin configures; this plugin targets the
+hosted SenseLab API.
 
 ## License
 
