@@ -5,7 +5,8 @@ discovered patterns, known risks, and the personal preferences of the person
 they work for — carried across sessions, tools, and machines. Shared **rooms**
 let several people's agents work from the same knowledge.
 
-Homepage: [sense-lab.ai](https://www.sense-lab.ai)
+Homepage: [sense-lab.ai](https://www.sense-lab.ai) · Docs:
+[docs.sense-lab.ai](https://docs.sense-lab.ai)
 
 ## Install
 
@@ -17,9 +18,9 @@ Or run `/add-plugin senselab` in chat.
 
 ### Get an API key
 
-Sign in at [sense-lab.ai](https://www.sense-lab.ai), then open the dashboard and
-create a key under **Settings → API Keys**. Cursor stores the key and injects it
-into the MCP server; it is never written into this repository.
+Follow the dashboard link from [sense-lab.ai](https://www.sense-lab.ai), sign
+in, and create a key under **Settings → API Keys**. Cursor stores the key and
+injects it into the MCP server; it is never written into this repository.
 
 ### Requirements
 
@@ -50,7 +51,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 `--refresh` with `@latest` means each Cursor launch picks up the current server
 release. Pin a version instead if you would rather control upgrades:
-`"args": ["amfs-mcp-server-pro==0.1.51"]`.
+`"args": ["amfs-mcp-server-pro@0.1.51"]`.
 
 ## What agents can do
 
@@ -67,16 +68,18 @@ release. Pin a version instead if you would rather control upgrades:
 | Consolidation | Review, critique, distil, and validate accumulated memory; calibrate confidence |
 
 The running server is the source of truth for tool names and schemas — open
-**Available Tools** in Cursor after connecting to see the current set.
+**Available Tools** in Cursor after connecting to see the current set, and see
+[docs.sense-lab.ai](https://docs.sense-lab.ai) for what each one does.
 
 ## What ships in the plugin
 
 - **Rule** (`rules/senselab-memory.mdc`) — always applied. Tells agents to
-  recall before working, what is worth saving, how rooms and documents behave,
-  and to ask before accepting a negotiation proposal.
+  recall before working, what is worth saving, and how rooms and documents
+  behave, and requires them to ask before accepting a negotiation proposal or
+  changing who can read a room.
 - **Skill** (`skills/senselab-memory/SKILL.md`) — the fuller guide: session
   lifecycle, cost model, conventions for entity paths and keys, memory types
-  and confidence, and anti-patterns.
+  and confidence, room access and document handling, and anti-patterns.
 
 ## Troubleshooting
 
@@ -95,9 +98,9 @@ bundled rule — make sure it is enabled under **Settings → Rules**.
 
 ## Self-hosting
 
-A self-hosted server backed by your own Postgres or filesystem is available
-separately and is not what this plugin configures; this plugin targets the
-hosted SenseLab API.
+This plugin targets the hosted SenseLab API. A self-hosted server backed by your
+own Postgres or filesystem is a separate setup — see the MCP guide at
+[docs.sense-lab.ai](https://docs.sense-lab.ai).
 
 ## License
 

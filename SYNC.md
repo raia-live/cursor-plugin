@@ -71,6 +71,9 @@ the old name and cannot be changed from this repository:
 - The environment variables are `AMFS_API_KEY` and `AMFS_HTTP_URL`.
 - The hosted API host is `amfs-login.sense-lab.ai` and the dashboard is on the
   `amfs` subdomain; `app.sense-lab.ai` does not resolve.
+- The docs site is titled SenseLab but every page sits under an `/amfs/` path
+  prefix, so `docs.sense-lab.ai` redirects to `/amfs/introduction`. Links here
+  deliberately use the bare domain to keep the prefix out of link text.
 - The PyPI package is `amfs-mcp-server-pro`.
 
 Renaming any of these needs server-side aliases (and, for the tool names, a
