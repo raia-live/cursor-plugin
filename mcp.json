@@ -1,11 +1,12 @@
 {
   "mcpServers": {
-    "amfs": {
+    "senselab": {
+      "type": "stdio",
       "command": "uvx",
-      "args": ["amfs-mcp-server"],
+      "args": ["--refresh", "amfs-mcp-server-pro@latest"],
       "env": {
         "AMFS_HTTP_URL": "https://amfs-login.sense-lab.ai",
-        "AMFS_API_KEY": "${env:AMFS_API_KEY}"
+        "AMFS_API_KEY": "${AMFS_API_KEY}"
       }
     }
   }
