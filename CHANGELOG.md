@@ -2,6 +2,19 @@
 
 All notable changes to this plugin are documented here.
 
+## 2.1.0
+
+Positioning: SenseLab is continual learning, not memory. Memory is how it
+works, not what it is for, and the plugin described the mechanism while
+sense-lab.ai and the Claude connector listing describe the product.
+
+- Reword the manifest description, README and component guides to lead on
+  knowledge that carries forward and is reinforced by outcomes. `memory` stays
+  in `keywords` because people search for it.
+- Rename `rules/senselab-memory.mdc` to `rules/senselab-learning.mdc` and the
+  `senselab-memory` skill to `senselab-learning`. Cursor keys skills by name,
+  so the old one disappears and the new one appears on upgrade.
+
 ## 2.0.0
 
 Breaking: the plugin and its MCP server are now named `senselab`. Cursor treats

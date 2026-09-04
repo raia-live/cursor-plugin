@@ -1,22 +1,24 @@
 ---
-name: senselab-memory
+name: senselab-learning
 description: >-
-  Guide for using SenseLab persistent memory well — how to recall by
+  Guide for making learning continuous with SenseLab — how to recall by
   meaning, what is worth saving, cost-conscious patterns, session lifecycle,
-  and collaborating through shared rooms. Use when saving or recalling
-  memories, reading briefings, working in a room, reading room documents,
-  taking part in a negotiation, or committing decision traces.
+  reinforcing knowledge with outcomes, and collaborating through shared rooms.
+  Use when saving or recalling knowledge, reading briefings, working in a room,
+  reading room documents, taking part in a negotiation, or committing decision
+  traces.
 ---
 
-# SenseLab memory guide
+# SenseLab guide
 
-Persistent memory that survives across sessions, agents, and machines, shared
-by every agent on the account. This guide covers decision rules and
-conventions; the MCP server itself documents tool syntax.
+What one agent works out becomes what the next one starts from, carried across
+sessions, agents and machines, and shared by every agent on the account. This
+guide covers decision rules and conventions; the MCP server itself documents
+tool syntax.
 
-Memory is general purpose. It holds personal facts and preferences — people,
-dates, how the user likes things done — as much as architecture decisions and
-runbooks.
+What is kept is general purpose. It holds personal facts and preferences —
+people, dates, how the user likes things done — as much as architecture
+decisions and runbooks.
 
 ## Cost model
 

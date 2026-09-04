@@ -1,11 +1,11 @@
 {
   "name": "senselab",
   "displayName": "SenseLab",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "minClientVersions": {
     "cursor": "3.13.0"
   },
-  "description": "Persistent agent memory across sessions, tools, and machines, plus shared rooms for team knowledge.",
+  "description": "Continual learning for your agents. What one works out carries across sessions, tools and machines, is reinforced by how the work turned out, and is shared through team rooms.",
   "author": {
     "name": "Raia",
     "email": "opensource@raia.live"
@@ -17,8 +17,9 @@
   "logo": "assets/logo.png",
   "keywords": [
     "senselab",
-    "memory",
+    "continual-learning",
     "agent-memory",
+    "memory",
     "knowledge-base",
     "multi-agent",
     "rooms",
@@ -26,7 +27,7 @@
   ],
   "category": "developer-tools",
   "tags": [
-    "memory",
+    "continual-learning",
     "mcp",
     "knowledge",
     "collaboration"
