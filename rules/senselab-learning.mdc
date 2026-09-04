@@ -1,15 +1,15 @@
 ---
-description: How to use SenseLab as persistent agent memory — recall before working, save what a future agent would need, and collaborate through rooms
+description: How to make learning continuous with SenseLab — get briefed before working, save what a future agent would need, reinforce it with outcomes, and collaborate through rooms
 alwaysApply: true
 ---
 
-# SenseLab memory
+# SenseLab
 
-SenseLab is persistent memory reached through the SenseLab MCP tools. It
-survives across sessions, tools, and machines, and is shared by every agent on
-the account. It stores **personal facts and preferences** (people, dates, how
-the user likes things done) as much as **work context** (decisions, patterns,
-runbooks).
+SenseLab makes learning continuous across your agents. What one agent works out
+is carried across sessions, tools, and machines, reinforced by how the work
+actually turned out, and available to every agent on the account. It holds
+**personal facts and preferences** (people, dates, how the user likes things
+done) as much as **work context** (decisions, patterns, runbooks).
 
 ## Start of session
 

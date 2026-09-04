@@ -7,8 +7,8 @@ agent guide skill, and the MCP server configuration for the hosted API.
 
 | Shipped file | Source | Notes |
 |--------------|--------|-------|
-| `rules/senselab-memory.mdc` | `raia-live/amfs` → `.cursor/rules/` | Always-applied behavioural rule. Keep it tight — it is injected into every request. |
-| `skills/senselab-memory/SKILL.md` | `raia-live/amfs` → `packages/agent-guide/cursor/` | The fuller guide, loaded on demand. |
+| `rules/senselab-learning.mdc` | `raia-live/amfs` → `.cursor/rules/` | Always-applied behavioural rule. Keep it tight — it is injected into every request. |
+| `skills/senselab-learning/SKILL.md` | `raia-live/amfs` → `packages/agent-guide/cursor/` | The fuller guide, loaded on demand. |
 | `mcp.json` | Dashboard **MCP Connection** card | Must stay aligned with the live snippet: `uvx`, `amfs-mcp-server-pro`, API host, and key variable. |
 | `assets/logo.png` | Dashboard brand mark | Square, transparent background, 512×512. |
 

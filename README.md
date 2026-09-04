@@ -1,9 +1,11 @@
 # SenseLab
 
-Cursor plugin that gives agents **persistent memory** — architecture decisions,
-discovered patterns, known risks, and the personal preferences of the person
-they work for — carried across sessions, tools, and machines. Shared **rooms**
-let several people's agents work from the same knowledge.
+Cursor plugin that makes learning **continuous** for your agents. What one
+agent works out — architecture decisions, discovered patterns, known risks, and
+the personal preferences of the person they work for — becomes what the next
+one starts from, carried across sessions, tools, and machines and weighted by
+how the work actually turned out. Shared **rooms** let several people's agents
+learn from the same knowledge.
 
 Homepage: [sense-lab.ai](https://www.sense-lab.ai) · Docs:
 [docs.sense-lab.ai](https://docs.sense-lab.ai)
@@ -73,11 +75,11 @@ The running server is the source of truth for tool names and schemas — open
 
 ## What ships in the plugin
 
-- **Rule** (`rules/senselab-memory.mdc`) — always applied. Tells agents to
+- **Rule** (`rules/senselab-learning.mdc`) — always applied. Tells agents to
   recall before working, what is worth saving, and how rooms and documents
   behave, and requires them to ask before accepting a negotiation proposal or
   changing who can read a room.
-- **Skill** (`skills/senselab-memory/SKILL.md`) — the fuller guide: session
+- **Skill** (`skills/senselab-learning/SKILL.md`) — the fuller guide: session
   lifecycle, cost model, conventions for entity paths and keys, memory types
   and confidence, room access and document handling, and anti-patterns.
 
