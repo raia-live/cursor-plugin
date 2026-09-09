@@ -1,7 +1,7 @@
 {
   "name": "senselab",
   "displayName": "SenseLab",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "minClientVersions": {
     "cursor": "3.13.0"
   },
@@ -32,19 +32,6 @@
     "knowledge",
     "collaboration"
   ],
-  "variables": {
-    "type": "object",
-    "properties": {
-      "AMFS_API_KEY": {
-        "type": "string",
-        "title": "SenseLab API key",
-        "description": "Create a key in the SenseLab dashboard under Settings → API Keys, then paste it here. Sign in from https://www.sense-lab.ai."
-      }
-    },
-    "required": [
-      "AMFS_API_KEY"
-    ]
-  },
   "rules": "./rules/",
   "skills": "./skills/",
   "mcpServers": "./mcp.json"
