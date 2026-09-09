@@ -30,9 +30,12 @@ decisions and runbooks.
 
 ## Session lifecycle
 
-1. **Identify** — `amfs_set_identity` with a stable kebab-case role name
-   (`api-agent`, `infra-agent`), reused across conversations about the same
-   domain. Not task-specific names like `fix-button-color`. Pass your `model`.
+1. **Identify** — where `amfs_set_identity` is in the tool list, call it with a
+   stable kebab-case role name (`api-agent`, `infra-agent`), reused across
+   conversations about the same domain. Not task-specific names like
+   `fix-button-color`. Pass your `model`. The hosted connection derives
+   identity from the client instead and does not offer the tool; skip to
+   recall.
 
 2. **Recall** — `amfs_briefing` for compiled context on an entity, then
    `amfs_retrieve` for specifics. One briefing replaces many individual reads.
@@ -121,6 +124,9 @@ reads are logged on both timelines.
 
 Rooms hold PDF, DOCX, Markdown, and text files with their text extracted, so
 you can search and quote them. Never ask the user to paste a file you can read.
+The document tools below are present only on connections that carry them —
+check the tool list, and if they are absent tell the user the file cannot be
+read from this connection rather than answering from a summary.
 
 - `amfs_room_add_document` takes a **path** — do not read the file and paste its
   contents. Extraction takes a few seconds.

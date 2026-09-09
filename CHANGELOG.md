@@ -2,6 +2,42 @@
 
 All notable changes to this plugin are documented here.
 
+## 3.0.0
+
+Breaking: the plugin now connects to SenseLab's hosted MCP endpoint over
+Streamable HTTP with browser OAuth, instead of running `amfs-mcp-server-pro`
+locally with a pasted API key. Cursor treats the transport change as a new
+connection: after upgrading, the `senselab` server shows **Needs
+authentication**, and one click on **Connect** finishes the setup.
+
+Why: the 2.x install never reliably asked for the key. Cursor only prompts for
+plugin variables in some install paths, never on upgrade from a release that
+had none, and never for a local install — and when no value is set it launches
+the server with the literal `${AMFS_API_KEY}` placeholder. The server then
+fails every call with "Invalid or missing API key" and nothing in the UI points
+at the fix, because a stdio server has no way to ask Cursor for credentials. A
+remote server can: it answers with a `401` challenge that Cursor turns into the
+Connect button.
+
+- Point `mcp.json` at `https://mcp.sense-lab.ai/mcp` (`type: http`). No
+  `command`, no `env`, no `uvx` requirement.
+- Remove the `variables` block and the `AMFS_API_KEY` prompt. There is nothing
+  for the user to paste.
+- Rewrite the README install steps around Connect → sign in → Approve, replace
+  the key- and `uvx`-centred troubleshooting with the OAuth states Cursor
+  actually shows, and move the local stdio server to an advanced section for
+  self-hosted deployments, configured in the user's own `~/.cursor/mcp.json`.
+- The rule and skill now say "if the tool is offered" for `amfs_set_identity`
+  and the room document tools, and point agents at the connection's tool list
+  as authoritative. The hosted gateway derives agent identity from the MCP
+  client and does not yet serve `amfs_set_identity`, `amfs_whoami`, or
+  `amfs_room_document_*`; an instruction to call a tool that is not there was
+  making agents report the server as broken. These edits need upstreaming to
+  the rule and skill sources in `raia-live/amfs` (see `SYNC.md`).
+- The capability table describes the hosted surface. The intelligence-layer
+  tools (critique, distil, calibrate, training export) remain on the local Pro
+  server documented in the advanced section.
+
 ## 2.1.0
 
 Positioning: SenseLab is continual learning, not memory. Memory is how it

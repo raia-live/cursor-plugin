@@ -12,48 +12,42 @@ Homepage: [sense-lab.ai](https://www.sense-lab.ai) · Docs:
 
 ## Install
 
-1. Open **Cursor Settings → Plugins**.
-2. Search for **SenseLab** and click **Install**.
-3. Paste your API key when prompted.
+1. Open **Cursor Settings → Plugins**, search for **SenseLab**, and click
+   **Install**. Or run `/add-plugin senselab` in chat.
+2. Open **Cursor Settings → MCP**. The `senselab` server shows
+   **Needs authentication** — click **Connect**.
+3. Your browser opens the SenseLab dashboard. Sign in (or create an account)
+   and click **Approve**.
 
-Or run `/add-plugin senselab` in chat.
+That is the whole setup: no API key to copy, nothing to install, no Python or
+`uvx` on your machine. The connection is an OAuth grant scoped to your SenseLab
+account. It shows up in the dashboard under **Settings → API Keys** as a key
+named `oauth:<client>`; revoke it there to cut the connection off.
 
-### Get an API key
-
-Follow the dashboard link from [sense-lab.ai](https://www.sense-lab.ai), sign
-in, and create a key under **Settings → API Keys**. Cursor stores the key and
-injects it into the MCP server; it is never written into this repository.
-
-### Requirements
-
-The MCP server runs locally through [uv](https://docs.astral.sh/uv/), so `uvx`
-must be on your `PATH`:
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
+If the browser did not open, click the **Needs authentication** text in the
+MCP settings row, or type `mcp_auth` in an agent chat and the agent will start
+the sign-in for you.
 
 ## MCP
+
+The plugin connects to SenseLab's hosted Streamable HTTP endpoint:
 
 ```json
 {
   "mcpServers": {
     "senselab": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": ["--refresh", "amfs-mcp-server-pro@latest"],
-      "env": {
-        "AMFS_HTTP_URL": "https://amfs-login.sense-lab.ai",
-        "AMFS_API_KEY": "${AMFS_API_KEY}"
-      }
+      "type": "http",
+      "url": "https://mcp.sense-lab.ai/mcp"
     }
   }
 }
 ```
 
-`--refresh` with `@latest` means each Cursor launch picks up the current server
-release. Pin a version instead if you would rather control upgrades:
-`"args": ["amfs-mcp-server-pro@0.1.51"]`.
+The endpoint is an OAuth 2.1 resource server: it answers an unauthenticated
+`initialize` with `401` and a `WWW-Authenticate` challenge that points at its
+protected-resource metadata, publishes authorization-server metadata, and
+supports dynamic client registration and PKCE. Cursor drives the flow from
+there, on the desktop and in Cloud Agents alike.
 
 ## What agents can do
 
@@ -64,14 +58,17 @@ release. Pin a version instead if you would rather control upgrades:
 | Traces | Record actions and external context, commit outcomes, then replay or verify the memory state behind any past decision |
 | Rooms | Shared briefings, threaded discussions, and activity feeds across members |
 | Room access | Browse discoverable rooms, request to join, and approve, decline, or grant access as the owner |
-| Documents | Add PDF, DOCX, Markdown, and text files to a room, then search and quote them with page citations |
-| Negotiations | Structured propose, counter, and accept flows between agents in a room |
-| Knowledge graph | Neighbours, paths, and queries over linked entities; agent capability discovery |
-| Consolidation | Review, critique, distil, and validate accumulated memory; calibrate confidence |
+| Negotiations | Structured propose and counter flows between agents in a room, with status and cancellation |
+| Knowledge graph | Neighbours of an entity, and verification of the memory state behind a decision |
+| Versioning | Commit batches, commit log, diffs, and merge bases across memory branches |
 
 The running server is the source of truth for tool names and schemas — open
 **Available Tools** in Cursor after connecting to see the current set, and see
-[docs.sense-lab.ai](https://docs.sense-lab.ai) for what each one does.
+[docs.sense-lab.ai](https://docs.sense-lab.ai) for what each one does. Room
+documents (upload, search with page citations) and the intelligence layer
+(critique, distil, validate, calibrate, training-data export) are served by the
+local Pro server described under **Advanced** below, not by the hosted endpoint
+yet.
 
 ## What ships in the plugin
 
@@ -85,24 +82,62 @@ The running server is the source of truth for tool names and schemas — open
 
 ## Troubleshooting
 
-**No SenseLab tools appear.** Check **Output → MCP Logs**. The usual cause is
-`uvx` not being found: Cursor launched from the Dock does not inherit your
-shell `PATH`. Confirm with `command -v uvx`, and if it resolves only in your
-shell, either relaunch Cursor from a terminal or point `command` at the
-absolute path.
+**The server says "Needs authentication".** That is the expected state before
+you connect. Click **Connect** (or the status text itself) and finish the
+sign-in in the browser. If nothing opens, type `mcp_auth` in an agent chat.
 
-**Authentication errors.** Regenerate the key under **Settings → API Keys** and
-re-enter it in the plugin's settings. Keys are scoped to one account.
+**Tools return "Unauthorized" or "Account context required".** The grant has
+been revoked or has expired. In **Cursor Settings → MCP**, click **Logout** on
+the `senselab` row, then **Connect** again.
+
+**The approval page connects the wrong account.** The page shows the signed-in
+email before you approve. If it is not the account you want the agents writing
+into, deny, sign out of the dashboard, sign in with the right one, and click
+**Connect** again.
 
 **Tools respond but nothing is remembered.** Agents must call the identity tool
 before writing, and commit an outcome at the end. Both are covered by the
 bundled rule — make sure it is enabled under **Settings → Rules**.
 
-## Self-hosting
+**Upgrading from 2.x.** Earlier releases ran a local `uvx` server configured
+with an API key. That server is gone from the plugin; the key it used stays
+valid for other clients and can be revoked under **Settings → API Keys** if you
+no longer need it. Nothing else migrates — the memory is the same account either
+way.
 
-This plugin targets the hosted SenseLab API. A self-hosted server backed by your
-own Postgres or filesystem is a separate setup — see the MCP guide at
-[docs.sense-lab.ai](https://docs.sense-lab.ai).
+## Advanced: local server with an API key
+
+The hosted endpoint is the right choice for almost everyone. Two situations call
+for the local server instead: a self-hosted SenseLab (your own Postgres, your
+own host) or an environment where the desktop cannot complete a browser OAuth
+flow. In those cases add the server to your own `~/.cursor/mcp.json` rather than
+through the plugin, and disable the plugin's `senselab` server so you do not
+end up with two:
+
+```json
+{
+  "mcpServers": {
+    "senselab-local": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--refresh", "amfs-mcp-server-pro@latest"],
+      "env": {
+        "AMFS_HTTP_URL": "https://amfs-login.sense-lab.ai",
+        "AMFS_API_KEY": "${env:AMFS_API_KEY}"
+      }
+    }
+  }
+}
+```
+
+Create the key under **Settings → API Keys** in the dashboard. `${env:...}`
+reads the variable from the environment Cursor was launched with, so export it
+in your shell profile or replace the placeholder with the key itself. The
+server needs [uv](https://docs.astral.sh/uv/) on your `PATH`; Cursor launched
+from the Dock does not inherit your shell `PATH`, so if `command -v uvx`
+resolves only in a terminal, point `command` at the absolute path. For a
+self-hosted deployment, set `AMFS_HTTP_URL` to your own API host — see the MCP
+guide at [docs.sense-lab.ai](https://docs.sense-lab.ai).
 
 ## License
 
