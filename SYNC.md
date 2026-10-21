@@ -11,7 +11,7 @@ agent guide skill, and the MCP server configuration for the hosted API.
 | `skills/senselab-learning/SKILL.md` | `raia-live/amfs` → `packages/agent-guide/cursor/` | The fuller guide, loaded on demand. |
 | `mcp.json` | `raia-live/amfs-internal` → `dashboard/src/lib/public-api-url.ts` (`PRODUCTION_MCP_URL`) | The remote Streamable HTTP endpoint. Must be the host the gateway's OAuth discovery documents name as the resource (`mcp.sense-lab.ai`, not `amfs-login`), with no trailing slash — Cursor compares it byte-for-byte against the protected-resource metadata. |
 | `assets/logo.png` | Dashboard brand mark | Square, transparent background, 512×512. |
-| `hooks/` | This repository | Owned here; `raia-live/amfs-internal` → `docs/room-inbox.md` describes the inbox and wait they build on. The re-arm loop assumes `amfs_room_wait` on the hosted endpoint is bounded (240 s) and the `[senselab] Still listening` prefix is what `room-wait-reset.sh` recognises — change both together. |
+| `hooks/` | This repository | Owned here; `raia-live/amfs-internal` → `docs/room-inbox.md` describes the inbox and wait they build on. Commands must be `bash "${CURSOR_PLUGIN_ROOT}/hooks/…"` — plugin hooks run from the user's workspace, not the plugin, so a relative path finds nothing (fails open, silently). The re-arm loop assumes `amfs_room_wait` on the hosted endpoint is bounded (240 s) and the `[senselab] Still listening` prefix is what `room-wait-reset.sh` recognises — change both together. |
 
 ## When the server changes
 
