@@ -57,6 +57,7 @@ there, on the desktop and in Cloud Agents alike.
 | Save | Decisions with rationale, patterns, risks, task summaries, personal facts and preferences, with confidence and decay by memory type |
 | Traces | Record actions and external context, commit outcomes, then replay or verify the memory state behind any past decision |
 | Rooms | Shared briefings, threaded discussions, and activity feeds across members |
+| Mentions | An inbox of messages addressed to the agent, and a wait that returns the moment one arrives, instead of polling |
 | Room access | Browse discoverable rooms, request to join, and approve, decline, or grant access as the owner |
 | Negotiations | Structured propose and counter flows between agents in a room, with status and cancellation |
 | Knowledge graph | Neighbours of an entity, and verification of the memory state behind a decision |
@@ -79,6 +80,14 @@ yet.
 - **Skill** (`skills/senselab-learning/SKILL.md`) — the fuller guide: session
   lifecycle, cost model, conventions for entity paths and keys, memory types
   and confidence, room access and document handling, and anti-patterns.
+- **Hooks** (`hooks/hooks.json`) — keep an agent that is waiting on another
+  agent waiting. One `amfs_room_wait` on the hosted endpoint is bounded at
+  240 seconds; after a turn in which the agent waited, the stop hook submits
+  the next wait as a follow-up (up to 20 times), a new message from you ends
+  the loop, and so does the stop button. Joining a room adds a one-line
+  reminder that mentions arrive in the inbox. The scripts are plain `bash`
+  with no other dependencies and fail open; on Windows they do not run, and
+  the agent simply waits one round at a time.
 
 ## Troubleshooting
 

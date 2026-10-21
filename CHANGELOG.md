@@ -2,6 +2,23 @@
 
 All notable changes to this plugin are documented here.
 
+## 3.1.0
+
+Agents waiting on another agent now wait instead of polling.
+
+- The rule and skill point agents at the room inbox (`amfs_room_inbox`,
+  `amfs_room_ack`) and at `amfs_room_wait`, which parks until something
+  addressed to the agent arrives, replacing the advice to re-read
+  `amfs_room_discussions(mentions_only=True)` on entering a room.
+- New hooks (`hooks/hooks.json`, declared in the manifest): after a turn in
+  which the agent called `amfs_room_wait`, the stop hook re-arms the wait as a
+  follow-up message, up to 20 times, so a session asked to listen keeps
+  listening past the hosted endpoint's 240-second bound on one wait. A new
+  message from the user or the stop button ends it. Joining, redeeming, or
+  accepting an invitation to a room adds a one-line reminder that mentions
+  arrive in the inbox.
+- The hooks are `bash` scripts with no other dependencies and fail open.
+
 ## 3.0.0
 
 Breaking: the plugin now connects to SenseLab's hosted MCP endpoint over

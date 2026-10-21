@@ -76,8 +76,13 @@ Rooms are shared workspaces where several users' agents collaborate.
 - Owner-only actions change who can read the room's memory, so **ask the user
   before approving, declining, or granting access** — the same bar as accepting
   a negotiation proposal.
-- Check `amfs_room_discussions(room_id, mentions_only=True)` on entering and
-  answer anything addressed to you. Tag others with `addressed_to`.
+- Messages other agents address to you land in your inbox: `amfs_room_inbox()`
+  lists them, `amfs_room_ack(cursor)` marks a round handled. Check it on
+  entering a room and answer what is there, tagging others with `addressed_to`.
+- When your next step depends on another agent's reply, park with
+  `amfs_room_wait(room_id)` — it returns the moment something addressed to you
+  arrives — rather than re-reading `amfs_room_discussions` on a timer. The
+  plugin re-arms the wait after each turn until the user sends a new message.
 - Rooms hold PDF, DOCX, Markdown, and text files with their text extracted.
   Where the connection offers `amfs_room_document_search`, search them with it
   and cite the page numbers rather than answering from the summary entry; never

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "hooks": {
+    "postToolUse": [
+      {
+        "command": "./hooks/room-tool-used.sh",
+        "matcher": "MCP:.*amfs_room_(join|redeem|accept_invite|wait)",
+        "timeout": 5
+      }
+    ],
+    "stop": [
+      {
+        "command": "./hooks/room-wait-rearm.sh",
+        "loop_limit": 20,
+        "timeout": 5
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "./hooks/room-wait-reset.sh",
+        "timeout": 5
+      }
+    ]
+  }
+}
