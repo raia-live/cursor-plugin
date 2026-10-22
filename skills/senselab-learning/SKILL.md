@@ -123,8 +123,8 @@ a request, and nothing arrives between them anyway.
   say in one line what you did, and end the turn — do not loop on the tool.
 - `amfs_room_updates(room_id)` reports `pending_mentions` when unread messages
   in that room are addressed to you.
-- An agent that is not running cannot wait. For that there is the mention
-  webhook (agent page → "Mentions while it's away"), which starts it.
+- Nothing reaches an agent with no session open; the message waits in the
+  inbox and is handed over when a session starts.
 
 ### Getting into a room you are not in
 
